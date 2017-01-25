@@ -1,8 +1,8 @@
 clear; clc;
 % You bet a sum of money on a coin flip according to a policy. Your goal is
-% to eventually win an ammount of money determined by the programmer. You 
-% flip a coin whose probability of landing heads is also determined by the 
-% programmer and you always bet on heads.
+% to eventually win a certain amount of money and learn a policy maximizing
+% the probability of doing this. You flip a coin whose probability of 
+% landing heads is not necessarily 50% and you may only bet on heads.
 
 goal = 100;
 reward = 0;
