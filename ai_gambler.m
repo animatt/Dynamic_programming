@@ -5,7 +5,6 @@ clear; clc;
 % landing heads is not necessarily 50% and you may only bet on heads.
 
 goal = 100;
-reward = 0;
 starting_bank = 10;
 probability_of_heads = 40 / 100;
 
