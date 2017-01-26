@@ -22,19 +22,24 @@ pol = [1 : 50, 49: -1: 1]';
 
 % value iteration
 learner_is_converging = true;
+count = 0;
 while learner_is_converging
     for ii = S
-        v = V';
+        jj = ii + 1; % index into S+
+        v = [0; V; 0]';
         % max_a(E[R_t+1 + y * v_k(S_t+1)|S_t = s, A_t = a])
         % max_a(?_r,s' p(s',r|s,a)(r + y v(s')))
-        V(ii) = psrsa * (R(:, 1 : min(ii, goal - ii)) ...
-            + gamma * [v(ii + 1 : min(2 * ii, goal - ii)); ...
-            v(ii - 1 : -1 : max(1, 2 * ii - goal)), 0]);
+        V(ii) = psrsa * max(R(:, 1 : min(ii, goal - ii)) ...
+            + gamma * [v(jj + 1 : min(2 * jj, goal - jj)); ...
+            v(jj - 1 : -1 : max(0, 2 * jj - goal))]);
         
 %         psrsa * (R(ii, 1) + gamma * v) ... 
 %             + (1 - psrsa) * (R(ii, 2) + gamma * v);
     end
-    learner_is_converging;
+    if count > 100
+        learner_is_converging = false;
+    end
+    count = count + 1;
 end
 
 
