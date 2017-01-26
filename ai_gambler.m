@@ -23,10 +23,10 @@ psrsa = [probability_of_heads, 1 - probability_of_heads]'; % p(s',r|s,a)
 learner_is_converging = true;
 count = 0;
 while learner_is_converging
-    for ii = S
+    for ii = S'
         jj = ii + 1; % index into S+
         
-        v = [0; V; 0]';
+        v = [0; V'; 0]';
         v_top = v(jj + 1 : min(2 * jj - 1, goal - jj));
         v_bot = v(jj - 1 : -1 : max(1, 2 * jj - goal));
         v = [v_top'; v_bot']
