@@ -12,7 +12,7 @@ probability_of_heads = 40 / 100;
 V = zeros(goal, 1);
 A = (1 : 50)';
 R = [A, -A]';
-S = (1 : 99)';
+S = (1 : goal - 1)';
 
 gamma = 0.9;
 
@@ -23,7 +23,7 @@ pol = [1 : 50, 49: -1: 1]';
 % value iteration
 learner_is_converging = true;
 while learner_is_converging
-    for ii = 1 : 99
+    for ii = S
         v = V';
         % max_a(E[R_t+1 + y * v_k(S_t+1)|S_t = s, A_t = a])
         % max_a(?_r,s' p(s',r|s,a)(r + y v(s')))
