@@ -34,7 +34,7 @@ while learner_is_converging
         r = R(:, 1 : min(ii, goal - ii));
         % max_a(E[R_t+1 + y * v_k(S_t+1)|S_t = s, A_t = a])
         % max_a(?_r,s' p(s',r|s,a)(r + y v(s')))
-        V(ii) = max(psrsa * (r + gamma * v));
+        V(ii) = max(psrsa' * (r + gamma * v));
         
 %         psrsa * (R(ii, 1) + gamma * v) ... 
 %             + (1 - psrsa) * (R(ii, 2) + gamma * v);
