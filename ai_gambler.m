@@ -26,7 +26,7 @@ while learner_is_converging
     for ii = S
         jj = ii + 1; % index into S+
         v = [0; V; 0]';
-        v_top = v(jj + 1 : min(2 * jj, goal - jj));
+        v_top = v(jj + 1 : min(2 * jj - 1, goal - jj));
         v_bot = v(jj - 1 : -1 : max(1, 2 * jj - goal));
         % max_a(E[R_t+1 + y * v_k(S_t+1)|S_t = s, A_t = a])
         % max_a(?_r,s' p(s',r|s,a)(r + y v(s')))
