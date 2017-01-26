@@ -29,9 +29,9 @@ while learner_is_converging
         v = [0; V; 0]';
         v_top = v(jj + 1 : min(2 * jj - 1, goal - jj));
         v_bot = v(jj - 1 : -1 : max(1, 2 * jj - goal));
-        v = [v_top'; v_bot'];
+        v = [v_top'; v_bot']
         
-        r = R(:, 1 : min(ii, goal - ii));
+        r = R(:, 1 : min(ii, goal - ii))
         % max_a(E[R_t+1 + y * v_k(S_t+1)|S_t = s, A_t = a])
         % max_a(?_r,s' p(s',r|s,a)(r + y v(s')))
         V(ii) = max(psrsa' * (r + gamma * v));
@@ -39,11 +39,13 @@ while learner_is_converging
 %         psrsa * (R(ii, 1) + gamma * v) ... 
 %             + (1 - psrsa) * (R(ii, 2) + gamma * v);
     end
-    if count > 100
+    V;
+    if count > 3
         learner_is_converging = false;
     end
     count = count + 1;
 end
+
 
 
 bank = starting_bank;
