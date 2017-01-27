@@ -22,9 +22,8 @@ learner_is_converging = true;
 count = 0;
 while learner_is_converging
     for ii = S'
-        
         A_s = A(1 : min(ii, goal - ii));
-        
+        R_s = R(1 : min(ii, goal - ii), :);
         
         % max_a(E[R_t+1 + y * v_k(S_t+1)|S_t = s, A_t = a])
         % max_a(?_r,s' p(s',r|s,a)(r + y v(s')))
