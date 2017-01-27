@@ -13,8 +13,6 @@ A = (1 : 50)';
 R = [A, -A]';
 S = (1 : goal - 1)';
 
-gamma = 0.9;
-
 psrsa = [probability_of_heads, 1 - probability_of_heads]'; % p(s',r|s,a)
 
 % pol = [1 : 50, 49: -1: 1]';
@@ -24,9 +22,10 @@ learner_is_converging = true;
 count = 0;
 while learner_is_converging
     for ii = S'
-
         % max_a(E[R_t+1 + y * v_k(S_t+1)|S_t = s, A_t = a])
         % max_a(?_r,s' p(s',r|s,a)(r + y v(s')))
+        
+        
         
 %         psrsa * (R(ii, 1) + gamma * v) ... 
 %             + (1 - psrsa) * (R(ii, 2) + gamma * v);
