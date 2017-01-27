@@ -8,14 +8,11 @@ goal = 100;
 starting_bank = 10;
 probability_of_heads = 40 / 100;
 
-V = zeros(goal, 1);
+V = zeros(goal - 1, 1);
 A = (1 : 50)';
-R = [A, -A];
 S = (1 : goal - 1)';
 
 pssa = [probability_of_heads, 1 - probability_of_heads]'; % p(s'|s,a)
-
-% pol = [1 : 50, 49: -1: 1]';
 
 % value iteration
 learner_is_converging = true;
@@ -24,9 +21,8 @@ while learner_is_converging
     for s = S'
         v = [0; V; 0];
         A_s = A(1 : min(s, goal - s));
-        r = R(1 : min(s, goal - s), :)';
-        
-        tab = table(A_s, r')
+        r = zeros(2, length(A));
+        r(1, A_s(end)) = s + A_s(end) == goal;
         
         % max_a(E[R_t+1 + y * v_k(S_t+1)|S_t = s, A_t = a])
         % max_a(?_r,s' p(s',r|s,a)(r + y v(s')))
@@ -37,14 +33,10 @@ while learner_is_converging
             s_next = [s + a; s - a];
             V(s) = max(pssa' * (r + v(s_next * ones(1, length(r)) + 1)));
         end
-        
-%         psrsa * (R(ii, 1) + gamma * v) ... 
-%             + (1 - psrsa) * (R(ii, 2) + gamma * v);
     end
-    if count > 3
+    if count > 50
         learner_is_converging = false;
     end
-    V
     count = count + 1;
 end
 
