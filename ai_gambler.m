@@ -23,11 +23,12 @@ count = 0;
 while learner_is_converging
     for s = S'
         A_s = A(1 : min(s, goal - s))';
-        R_s = R(1 : min(s, goal - s), :);
+        r = R(1 : min(s, goal - s), :);
         
         % max_a(E[R_t+1 + y * v_k(S_t+1)|S_t = s, A_t = a])
         % max_a(?_r,s' p(s',r|s,a)(r + y v(s')))
         % max_a(?_r,s' p(r|s',s,a)p(s'|s,a)(r + y v(s')))
+        % max_a(?_s' p(s'|s,a)(r + y v(s')))
         
 %         psrsa * (R(ii, 1) + gamma * v) ... 
 %             + (1 - psrsa) * (R(ii, 2) + gamma * v);
