@@ -10,7 +10,7 @@ probability_of_heads = 40 / 100;
 
 V = zeros(goal, 1);
 A = (1 : 50)';
-R = [A, -A]';
+R = [A, -A];
 S = (1 : goal - 1)';
 
 psrsa = [probability_of_heads, 1 - probability_of_heads]'; % p(s'|s,a)
@@ -24,6 +24,7 @@ while learner_is_converging
     for ii = S'
         
         A_s = A(1 : min(ii, goal - ii));
+        
         
         % max_a(E[R_t+1 + y * v_k(S_t+1)|S_t = s, A_t = a])
         % max_a(?_r,s' p(s',r|s,a)(r + y v(s')))
