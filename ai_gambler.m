@@ -14,7 +14,7 @@ S = (1 : goal - 1)';
 
 pssa = [probability_of_heads, 1 - probability_of_heads]'; % p(s'|s,a)
 
-hold on
+figure; hold on
 
 % value iteration
 learner_is_converging = true;
@@ -47,6 +47,21 @@ hold off
 
 xlabel('state s')
 ylabel('state value function v(s)')
+
+figure; hold on
+policy = zeros(goal - 1, 1);
+for s = S'
+    v = [0; V; 0];
+    A_s = A(1 : min(s, goal - s));
+    r = zeros(length(A_s), 2);
+    r(end, 1) = s + A_s(end) == goal
+    
+    for a = A_s'
+        s_next = [s + a; s - a];
+%         [~, policy(s)] = max(
+    end
+     % what goes here? does the value iteration algorithm used earlier actually make sense? is there a better way?
+end
 
 % bank = starting_bank;
 % 
