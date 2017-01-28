@@ -14,6 +14,8 @@ S = (1 : goal - 1)';
 
 pssa = [probability_of_heads, 1 - probability_of_heads]'; % p(s'|s,a)
 
+hold on
+
 % value iteration
 learner_is_converging = true;
 count = 0;
@@ -37,27 +39,32 @@ while learner_is_converging
     if count > 50
         learner_is_converging = false;
     end
+    plot(S, V)
     count = count + 1;
 end
 
+hold off
 
-bank = starting_bank;
+xlabel('state s')
+ylabel('state value function v(s)')
 
-while bank < 100 && bank > 0
-    % Use all available information to determine the amount to gamble.
-    % Bank will be reduced appropriately
-    [bank, stake] = ai_make_bet(bank, goal, probability_of_heads);
-    
-    % Return true if coin lands heads
-    heads = flip_coin(probability_of_heads);
-    
-    % Increase bank if you won
-    bank = bank + 2 * heads * stake;
-end
-
-if bank >= 100
-    fprintf('You win\n')
-    reward = reward + 1;
-else
-    fprintf('You lose\n')
-end
+% bank = starting_bank;
+% 
+% while bank < 100 && bank > 0
+%     % Use all available information to determine the amount to gamble.
+%     % Bank will be reduced appropriately
+%     [bank, stake] = ai_make_bet(bank, goal, probability_of_heads);
+%     
+%     % Return true if coin lands heads
+%     heads = flip_coin(probability_of_heads);
+%     
+%     % Increase bank if you won
+%     bank = bank + 2 * heads * stake;
+% end
+% 
+% if bank >= 100
+%     fprintf('You win\n')
+%     reward = reward + 1;
+% else
+%     fprintf('You lose\n')
+% end
