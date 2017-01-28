@@ -26,10 +26,10 @@ while learner_is_converging
         r = zeros(2, length(A));
         r(1, A_s(end)) = s + A_s(end) == goal;
         
-        % max_a(E[R_t+1 + y * v_k(S_t+1)|S_t = s, A_t = a])
-        % max_a(?_r,s' p(s',r|s,a)(r + y v(s')))
-        % max_a(?_r,s' p(r|s',s,a)p(s'|s,a)(r + y v(s')))
-        % max_a(?_s' p(s'|s,a)(r + y v(s')))
+        % v_k+1 = max_a(E[R_t+1 + y v_k(S_t+1)|S_t = s, A_t = a])
+        %  = max_a(?_r,s' p(s',r|s,a)(r + y v(s')))
+        %  = max_a(?_r,s' p(r|s',s,a)p(s'|s,a)(r + y v(s')))
+        %  = max_a(?_s' 1{s' == 100}p(s'|s,a)(r + y v(s')))
         
         for a = A_s'
             s_next = [s + a; s - a];
