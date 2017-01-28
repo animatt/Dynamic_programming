@@ -33,36 +33,31 @@ while learner_is_converging
         %  = max_a(sum_s' 1{s' == 100}p(s'|s,a)(r + y v(s')))
         
         s_next = [s + A_s, s - A_s];
-        selection = (r + v(s_next + 1)) * pssa;
         V(s) = max((r + v(s_next + 1)) * pssa);
         
     end
-    if count > 50
+    if count > 1000
         learner_is_converging = false;
     end
     plot(S, V)
     count = count + 1;
 end
 
-hold off
+hold off, xlabel('state s'), ylabel('state value function v(s)')
 
-xlabel('state s')
-ylabel('state value function v(s)')
+policy = zeros(goal - 1, 1);
+for s = S'
+    v = [0; V; 0]';
+    A_s = A(1 : min(s, goal - s));
+    r = zeros(length(A_s), 2);
+    r(end, 1) = s + A_s(end) == goal;
+    
+    s_next = [s + A_s, s - A_s];
+    [~, policy(s)] = max((r + v(s_next + 1)) * pssa);
+     % what goes here? does the value iteration algorithm used earlier actually make sense? is there a better way?
+end
 
-% figure; hold on
-% policy = zeros(goal - 1, 1);
-% for s = S'
-%     v = [0; V; 0];
-%     A_s = A(1 : min(s, goal - s));
-%     r = zeros(length(A_s), 2);
-%     r(end, 1) = s + A_s(end) == goal
-%     
-%     for a = A_s'
-%         s_next = [s + a; s - a];
-% %         [~, policy(s)] = max(
-%     end
-%      % what goes here? does the value iteration algorithm used earlier actually make sense? is there a better way?
-% end
+figure, bar(S, policy), xlabel('state s'), ylabel('policy')
 
 % bank = starting_bank;
 % 
