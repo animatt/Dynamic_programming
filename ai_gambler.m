@@ -8,7 +8,10 @@ goal = 100;
 % starting_bank = 10;
 probability_of_heads = 40 / 100;
 
-V = zeros(goal - 1, 1);
+syms V v
+digits(41)
+
+V = vpa(zeros(goal - 1, 1));
 A = (1 : 50)';
 S = (1 : goal - 1)';
 
@@ -20,6 +23,7 @@ figure; hold on
 learner_is_converging = true;
 count = 0;
 while learner_is_converging
+    delta = V;
     for s = S'
         v = [0; V; 0]';
         A_s = A(1 : min(s, goal - s));
@@ -36,16 +40,18 @@ while learner_is_converging
         V(s) = max((r + v(s_next + 1)) * pssa);
         
     end
-    if count > 1000
+    count = count + 1
+    if max(abs(V - delta)) < 1e-40
+        [largest_diff, index] = max(abs(V - v(2 : goal)'))
+        count
         learner_is_converging = false;
     end
     plot(S, V)
-    count = count + 1;
 end
 
 hold off, xlabel('state s'), ylabel('state value function v(s)')
 
-policy = zeros(goal - 1, 1);
+policy = zeros(size(S));
 for s = S'
     v = [0; V; 0]';
     A_s = A(1 : min(s, goal - s));
@@ -54,7 +60,6 @@ for s = S'
     
     s_next = [s + A_s, s - A_s];
     [~, policy(s)] = max((r + v(s_next + 1)) * pssa);
-     % what goes here? does the value iteration algorithm used earlier actually make sense? is there a better way?
 end
 
 figure, bar(S, policy), xlabel('state s'), ylabel('policy')
